@@ -107,7 +107,7 @@ public class SearchIdentityServiceTest extends AbstractServiceTest
         search.getAttributes( ).add( searchAttribute );
         identitySearchRequest.setSearch( search );
         final IdentitySearchResponse getResponse = service.searchIdentities( identitySearchRequest, clientCode, this.getRequestAuthor( ) );
-        assert Objects.equals( getResponse.getStatus( ).getType( ), ResponseStatusType.FAILURE );
+        assert Objects.equals( getResponse.getStatus( ).getType( ), ResponseStatusType.FORBIDDEN );
     }
 
     @Test
