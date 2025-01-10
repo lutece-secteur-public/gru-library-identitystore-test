@@ -15,6 +15,12 @@
     <bean id="httpAccessTransport-idi" class="fr.paris.lutece.plugins.identityimport.web.rs.service.HttpAccessTransport" >
         <property name="apiEndPointUrl" value="${rest.import.endpoint}"/>
     </bean>
+    <bean id="httpAccessTransport-ida" class="fr.paris.lutece.plugins.accountmanagement.web.rs.service.HttpAccessTransport" >
+        <property name="apiEndPointUrl" value="${rest.account.endpoint}"/>
+    </bean>
+    <bean id="httpAccessTransport-idg" class="fr.paris.lutece.plugins.accountgenerator.web.rs.service.HttpAccessTransport" >
+        <property name="apiEndPointUrl" value="${rest.endpoint}"/>
+    </bean>
 
     <bean id="restTransport.httpAccess" class="fr.paris.lutece.plugins.identityquality.v3.web.rs.service.IdentityQualityTransportRest">
         <constructor-arg ref="httpAccessTransport-idm" />
@@ -39,6 +45,22 @@
     </bean>
     <bean id="restTransport.import.httpAccess" class="fr.paris.lutece.plugins.identityimport.web.rs.service.BatchImportTransportRest">
         <constructor-arg ref="httpAccessTransport-idi" />
+    </bean>
+    <bean id="restTransport.account.httpAccess" class="fr.paris.lutece.plugins.accountmanagement.web.rs.service.transportrest.AccountManagementTransportRest">
+        <constructor-arg ref="httpAccessTransport-ida" />
+        <constructor-arg name="strAccountManagementApi" value="/account/rest/openam/api/1" />
+    </bean>
+    <bean id="restTransport.federationlink.httpAccess" class="fr.paris.lutece.plugins.accountmanagement.web.rs.service.transportrest.FederationLinkManagementTransportRest">
+        <constructor-arg ref="httpAccessTransport-ida" />
+        <constructor-arg name="strFederationLinkManagementApi" value="/account/rest/openam/api/1" />
+    </bean>
+    <bean id="restTransport.passwordhistory.httpAccess" class="fr.paris.lutece.plugins.accountmanagement.web.rs.service.transportrest.PasswordHistoryManagementRest">
+        <constructor-arg ref="httpAccessTransport-ida" />
+        <constructor-arg name="strPasswordHistoryManagementApi" value="/account/rest/openam/api/1" />
+    </bean>
+    <bean id="restTransport.accountgenerator.httpAccess" class="fr.paris.lutece.plugins.accountgenerator.web.rs.service.AccountGeneratorTransportRest">
+        <constructor-arg ref="httpAccessTransport-idg" />
+        <constructor-arg name="strIdentityPath" value="/rest/identitystore" />
     </bean>
 
     <!-- QualityService impl -->
@@ -72,5 +94,21 @@
     <!-- BatchService impl -->
     <bean id="identityService.import.httpAccess" class="fr.paris.lutece.plugins.identityimport.web.service.BatchImportService">
         <constructor-arg ref="restTransport.import.httpAccess"/>
+    </bean>
+    <!-- AccountManagement impl -->
+    <bean id="identityService.accountmanagement.httpAccess" class="fr.paris.lutece.plugins.accountmanagement.web.service.AccountManagementService">
+        <constructor-arg ref="restTransport.account.httpAccess"/>
+    </bean>
+    <!-- FederationLinkManagement impl -->
+    <bean id="identityService.federationlinkmanagement.httpAccess" class="fr.paris.lutece.plugins.accountmanagement.web.service.FederationLinkManagementService">
+        <constructor-arg ref="restTransport.federationlink.httpAccess"/>
+    </bean>
+    <!-- PasswordHistory impl -->
+    <bean id="identityService.passwordhistory.httpAccess" class="fr.paris.lutece.plugins.accountmanagement.web.service.PasswordHistoryService">
+        <constructor-arg ref="restTransport.passwordhistory.httpAccess"/>
+    </bean>
+    <!-- PasswordHistory impl -->
+    <bean id="identityService.accountgenerator.httpAccess" class="fr.paris.lutece.plugins.accountgenerator.web.service.AccountGeneratorService">
+        <constructor-arg ref="restTransport.accountgenerator.httpAccess"/>
     </bean>
 </beans>
