@@ -34,18 +34,15 @@
 package fr.paris.lutece.plugins.identitystore.v3.web.services;
 
 import fr.paris.lutece.plugins.accountgenerator.web.service.AccountGeneratorService;
-import fr.paris.lutece.plugins.identitystore.v3.web.rs.dto.account.RequestClient;
 import fr.paris.lutece.plugins.identitystore.v3.web.rs.dto.account.generator.AccountGenerationDto;
 import fr.paris.lutece.plugins.identitystore.v3.web.rs.dto.account.generator.AccountGenerationRequest;
 import fr.paris.lutece.plugins.identitystore.v3.web.rs.dto.account.generator.AccountGenerationResponse;
 import fr.paris.lutece.plugins.identitystore.v3.web.rs.util.ResponseStatusFactory;
 import fr.paris.lutece.plugins.identitystore.web.exception.IdentityStoreException;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
-import java.util.UUID;
 
 /**
  * test of NotificationService
@@ -59,23 +56,10 @@ public class AccountGeneratorServiceTest extends AbstractServiceTest
     @Resource( name = "identityService.accountgenerator.httpAccess" )
     private AccountGeneratorService accountGeneratorService;
 
-    private RequestClient client;
-    private final String mail = UUID.randomUUID() + "@mail.com";
-    private final String initialPassword = UUID.randomUUID().toString();
-    private final String newPassword = UUID.randomUUID().toString();
-
-    @Before
-    public void init(){
-        client = new RequestClient( );
-        client.setClientId("test_dicom_manager");
-        client.setClientSecret("test_dicom_manager");
-    }
-
     @Test
     public void testAccountManagementLifeCycle( ) throws IdentityStoreException {
 
         // Create account
-        System.out.println( "Create new account with login " + mail + " and password " + initialPassword );
         final AccountGenerationRequest request = new AccountGenerationRequest( );
         final AccountGenerationDto accountGeneration = new AccountGenerationDto();
         accountGeneration.setBatchSize(2);
@@ -84,7 +68,7 @@ public class AccountGeneratorServiceTest extends AbstractServiceTest
         accountGeneration.setGenerationPattern("pattern");
         accountGeneration.setNbDaysOfValidity(300);
         request.setAccountGenerationDto(accountGeneration);
-        final AccountGenerationResponse response = accountGeneratorService.createAccountBatch(request, this.getRequestAuthor(),clientCode);
+        final AccountGenerationResponse response = accountGeneratorService.createAccountBatch(request, this.getRequestAuthor(), clientCode);
         if(response.getStatus().getHttpCode() == ResponseStatusFactory.success().getHttpCode()){
             System.out.println( "Created accounts : " + response );
         } else {
