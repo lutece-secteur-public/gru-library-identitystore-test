@@ -55,6 +55,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -83,7 +85,7 @@ public class IdentityServiceTest extends AbstractServiceTest
         final AttributeDto attributeDto = new AttributeDto( );
         identity.getAttributes( ).add( attributeDto );
         attributeDto.setCertifier( "fccertifier" );
-        attributeDto.setCertificationDate( new Date( ) );
+        attributeDto.setCertificationDate( Timestamp.from( Instant.now( ) ) );
         attributeDto.setKey( Constants.PARAM_PREFERRED_USERNAME );
         attributeDto.setValue( "Tata" );
         identity.setLastUpdateDate( searchedIdentity.getLastUpdateDate( ) );
@@ -258,7 +260,7 @@ public class IdentityServiceTest extends AbstractServiceTest
         final IdentityDto newIdentity = this.getBasicIdentity( );
         final AttributeDto email = new AttributeDto( );
         email.setCertifier( "MAIL" );
-        email.setCertificationDate( new Date( ) );
+        email.setCertificationDate( Timestamp.from( Instant.now( ) ) );
         email.setKey( Constants.PARAM_EMAIL );
         final String secondIdentityEmailValue = "692433.xxxxx48@xxxxaxx.xx";
         email.setValue( secondIdentityEmailValue );
@@ -308,21 +310,21 @@ public class IdentityServiceTest extends AbstractServiceTest
 
         final AttributeDto firstName = new AttributeDto( );
         firstName.setCertifier( "DEC" );
-        firstName.setCertificationDate( new Date( ) );
+        firstName.setCertificationDate( Timestamp.from( Instant.now( ) ) );
         firstName.setKey( Constants.PARAM_FIRST_NAME );
         firstName.setValue( "Toto" );
         identity.getAttributes( ).add( firstName );
 
         final AttributeDto lastName = new AttributeDto( );
         lastName.setCertifier( "DEC" );
-        lastName.setCertificationDate( new Date( ) );
+        lastName.setCertificationDate( Timestamp.from( Instant.now( ) ) );
         lastName.setKey( Constants.PARAM_FAMILY_NAME );
         lastName.setValue( "Toto" );
         identity.getAttributes( ).add( lastName );
 
         final AttributeDto birthDate = new AttributeDto( );
         birthDate.setCertifier( "DEC" );
-        birthDate.setCertificationDate( new Date( ) );
+        birthDate.setCertificationDate( Timestamp.from( Instant.now( ) ) );
         birthDate.setKey( Constants.PARAM_BIRTH_DATE );
         birthDate.setValue( "01/01/1901" );
         identity.getAttributes( ).add( birthDate );

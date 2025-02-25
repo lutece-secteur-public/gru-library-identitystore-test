@@ -46,6 +46,8 @@ import fr.paris.lutece.plugins.identitystore.web.exception.IdentityStoreExceptio
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -75,28 +77,28 @@ public class BatchImportServiceTest extends AbstractServiceTest
         gender.setKey( "gender" );
         gender.setValue( "0" );
         gender.setCertifier( certificationCode );
-        gender.setCertificationDate( new Date( ) );
+        gender.setCertificationDate( Timestamp.from( Instant.now( ) ) );
 
         final AttributeDto familyName = new AttributeDto( );
         identityDto.getAttributes( ).add( familyName );
         familyName.setKey( "family_name" );
         familyName.setValue( "Testun" );
         familyName.setCertifier( certificationCode );
-        familyName.setCertificationDate( new Date( ) );
+        familyName.setCertificationDate( Timestamp.from( Instant.now( ) ) );
 
         final AttributeDto firstName = new AttributeDto( );
         identityDto.getAttributes( ).add( firstName );
         firstName.setKey( "first_name" );
         firstName.setValue( "Robert" );
         firstName.setCertifier( certificationCode );
-        firstName.setCertificationDate( new Date( ) );
+        firstName.setCertificationDate( Timestamp.from( Instant.now( ) ) );
 
         final AttributeDto birthdate = new AttributeDto( );
         identityDto.getAttributes( ).add( birthdate );
         birthdate.setKey( "birthdate" );
         birthdate.setValue( "11/11/1986" );
         birthdate.setCertifier( certificationCode );
-        birthdate.setCertificationDate( new Date( ) );
+        birthdate.setCertificationDate( Timestamp.from( Instant.now( ) ) );
 
         final BatchImportResponse response = service.importBatch( request, clientCode, getRequestAuthor( ) );
         assert response != null && response.getStatus( ) != null && response.getStatus( ).getHttpCode( ) == 201 && response.getReference( ) != null;
